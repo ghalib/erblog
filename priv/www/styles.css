@@ -1,0 +1,68 @@
+
+html {
+	font-size: 12px;
+}
+
+body {
+    background-color: black;
+    margin-left: 8em;
+    margin-top: 3em;
+}
+
+#text {
+    float: left;
+    font-family: verdana;
+    color: silver;
+    text-align: left;
+    width: 34em;
+    margin-bottom: 1em; 
+    line-height: 150%;
+    position: relative;
+}
+
+#copyright {
+    font-size: 9px;
+    color: #6c6d6d;
+}
+
+a.navlink {
+	font-family: Verdana;
+    color: #9ecce2;
+    text-decoration: none;
+    margin-right: 1.2em;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h3.blogtitle {
+	letter-spacing: 0.05em;
+	font-weight: normal;
+	font-size: 137%;
+	clear: left;
+}
+
+#topbar {
+		font-size: 120%;
+        height: 16px;
+    margin-bottom: 4em; 
+        letter-spacing: 0.15em;
+}
+
+#blogpost {
+margin-bottom: 7em;
+}
+
+#blogfooter {
+	margin-top: 0em;
+}
+
+#blogfooter.footerdate {
+	float: left;
+}
+
+#blogfooter.footerlink {
+	float: left;
+	margin-right: 17em;	
+}
