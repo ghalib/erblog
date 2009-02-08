@@ -1,4 +1,4 @@
--module(blog_pages).
+-module(blog_view).
 -author('ghalib <ghalib@sent.com').
 
 -export([about_page/0]).
