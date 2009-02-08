@@ -26,7 +26,7 @@ loop(Req, DocRoot) ->
         Method when Method =:= 'GET'; Method =:= 'HEAD' ->
             case Path of
 		"about" ->
-		    Req:ok({"text/html", blog_about:about_page()});
+		    Req:ok({"text/html", blog_pages:about_page()});
 		"blog" ->
 		    Req:ok({"text/html", 
 			    lists:map(fun blog_db:print_post/1, 

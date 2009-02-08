@@ -3,7 +3,7 @@
 -include_lib("stdlib/include/qlc.hrl").
 -include("blogpost.hrl").
 -export([init_db/0, add_blogpost/3, get_all_posts/0, print_post/1,
-	get_blogpost/1, prettify/1]).
+	get_blogpost/1]).
 
 
 %% Call this only once!
@@ -62,16 +62,6 @@ print_post(Blogpost) ->
 	Blogpost#blogpost.title ++ "<br/>" ++
 	Blogpost#blogpost.author ++ "<br/>" ++
 	Blogpost#blogpost.body ++ "<br/>" ++
-	prettify(Blogpost#blogpost.timestamp).
+	blog_util:pretty_time(Blogpost#blogpost.timestamp).
 
-%% Takes time tuple returned by calendar:local_time() and returns a
-%% more palatable string representation.
-prettify(Time) ->
-    {{Year, Month, Day},
-     {Hour, Minutes, Seconds}} = Time,
-    [Date, Time2] = lists:map(fun(L) -> 
-				      lists:map(fun integer_to_list/1, L)
-					  end,
-					[[Year, Month, Day], 
-					 [Hour, Minutes, Seconds]]),
-    string:join(Date, "/") ++ " " ++ string:join(Time2, ":").
+
