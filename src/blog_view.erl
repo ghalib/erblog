@@ -25,7 +25,7 @@ make_page(Content) ->
 			   [{link, [{rel, 'stylesheet'},
 				    {type, 'text/css'},
 				    {href, 'style.css'}], 
-			     []}]},
+			     []}]},s
 			  {body, [],
 			   [make_topbar([{<<"about">>,
 					  <<"About">>,
@@ -40,4 +40,4 @@ make_page(Content) ->
 
 about_page() ->
     make_page({'div', [{id, 'text'}],
-	       about_text()}).
+	       asabout_text()}).
