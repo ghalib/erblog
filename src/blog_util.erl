@@ -1,7 +1,9 @@
 -module(blog_util).
+
 -export([redirect/2,
 	integers_to_lists/1,
-	pretty_time/1]).
+	pretty_time/1,
+	html_text/1]).
 
 redirect(Req, Url) ->
     Req:respond({302,
@@ -20,3 +22,5 @@ pretty_time(LocalTime) ->
     Date2 = blog_util:integers_to_lists(tuple_to_list(Date)),
     string:join(Time2, ":") ++ " " ++ string:join(Date2, "/").
     
+html_text(Mochihtml) ->
+    iolist_to_binary(mochiweb_html:to_html(Mochihtml)).

@@ -19,24 +19,25 @@ about_text() ->
      {p, [], <<"Everyone else seems to have a website, so I thought I
      would hop on the bandwagon too .">>}].
 
-	
+make_page(Content) ->
+    blog_util:html_text({html, [],
+			 [{head, [],
+			   [{link, [{rel, 'stylesheet'},
+				    {type, 'text/css'},
+				    {href, 'style.css'}], 
+			     []}]},
+			  {body, [],
+			   [make_topbar([{<<"about">>,
+					  <<"About">>,
+					  "current"},
+					 {<<"code">>,
+					  <<"Code">>,
+					  ""},
+					 {<<"blog">>,
+					  <<"Blog">>,
+					  ""}]),
+			    Content]}]}).
+
 about_page() ->
-    iolist_to_binary(
-      mochiweb_html:to_html({html, [],
-			     [{head, [],
-			       [{link, [{rel, 'stylesheet'},
-					{type, 'text/css'},
-					{href, 'style.css'}], 
-				 []}]},
-			      {body, [],
-			       [make_topbar([{<<"about">>,
-					      <<"About">>,
-					      "current"},
-					     {<<"code">>,
-					      <<"Code">>,
-					     ""},
-					     {<<"blog">>,
-					      <<"Blog">>,
-					     ""}]),
-				{'div', [{id, 'text'}],
-				 about_text()}]}]})).
+    make_page({'div', [{id, 'text'}],
+	       about_text()}).

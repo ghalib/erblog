@@ -1,6 +1,5 @@
-
 html {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 body {
@@ -26,10 +25,22 @@ body {
 }
 
 a.navlink {
-	font-family: Verdana;
+    font-family: Verdana;
     color: #9ecce2;
     text-decoration: none;
-    margin-right: 1.2em;
+    margin-right: 2em;
+}
+
+a.navlink.current {
+    padding-top: 0em;
+    padding-bottom: 0em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-width: 1px;
+    border-left-style: solid;
+    border-bottom-style: none;
+    border-right-style: solid;
+    border-top-style: none;
 }
 
 a:hover {
@@ -37,32 +48,32 @@ a:hover {
 }
 
 h3.blogtitle {
-	letter-spacing: 0.05em;
-	font-weight: normal;
-	font-size: 137%;
-	clear: left;
+    letter-spacing: 0.05em;
+    font-weight: normal;
+    font-size: 137%;
+    clear: left;
 }
 
 #topbar {
-		font-size: 120%;
-        height: 16px;
+    font-size: 120%;
+    height: 16px;
     margin-bottom: 4em; 
-        letter-spacing: 0.15em;
+    letter-spacing: 0.15em;
 }
 
 div.blogpost {
-margin-bottom: 7em;
+    margin-bottom: 7em;
 }
 
 div.blogfooter {
-	margin-top: 0em;
+    margin-top: 0em;
 }
 
 h5.footerdate {
-	float: left;
+    float: left;
 }
 
 h5.footerlink {
-	float: left;
-	margin-right: 17em;	
+    float: left;
+    margin-right: 17em;	
 }
