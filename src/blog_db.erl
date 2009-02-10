@@ -38,9 +38,10 @@ canonicalise(Title) ->
     string:join(string:tokens(string:to_lower(Title), " "), "-").
     
 add_blogpost(Title, Author, Body) ->
-    Post = #blogpost{permalink = canonicalise(Title), title = Title,
-		     author = Author, body = Body,
-		     timestamp = calendar:local_time()},
+    blog_view:test_html(Body),
+    Post = #blogpost{timestamp = calendar:local_time(),
+		     permalink = canonicalise(Title), title = Title,
+		     author = Author, body = Body},
     database_write(Post).
 
 get_blogpost(Permalink) ->

@@ -28,9 +28,7 @@ loop(Req, DocRoot) ->
 		"about" ->
 		    Req:ok({"text/html", blog_view:about_page()});
 		"blog" ->
-		    Req:ok({"text/html", 
-			    lists:map(fun blog_db:print_post/1, 
-				      blog_db:get_all_posts())});
+		    Req:ok({"text/html", blog_view:blog_page()});
 		[$b, $l, $o, $g, $/ | Permalink] ->
 		    Req:ok({"text/html", 
 			    blog_db:print_post(blog_db:get_blogpost(Permalink))});

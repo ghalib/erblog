@@ -1,3 +1,3 @@
 %% Blog post record
 
--record(blogpost, {permalink, title, author, body, timestamp}).
+-record(blogpost, {timestamp, permalink, title, author, body}).
