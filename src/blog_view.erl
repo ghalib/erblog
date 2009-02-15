@@ -23,8 +23,8 @@ about_text() ->
     bandwagon too.">>},
 
      {p, [], <<"If you are doing any interesting work, I would love to
-     hear from you. I can be reached at << ghalib ##at ##sent ^dot
-     #com# >>">>}].
+     hear from you. I can be reached at <<ghalib ##at ##sent ^dot
+     #com#>>">>}].
 
 make_page(Topbar_Links, Content) ->
     blog_util:html_text({html, [],

@@ -24,9 +24,14 @@ body {
     color: #6c6d6d;
 }
 
+a {
+    color: #7da0d8;
+    text-decoration: none;
+}
+
 a.navlink {
     font-family: Verdana;
-    color: #9ecce2;
+    color: #8abdd6;
     text-decoration: none;
     margin-right: 2em;
 }

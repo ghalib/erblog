@@ -2,8 +2,11 @@
 
 -include_lib("stdlib/include/qlc.hrl").
 -include("blogpost.hrl").
--export([init_db/0, add_blogpost/3, get_all_posts/0, print_post/1,
-	get_blogpost/1]).
+
+-compile(export_all).
+
+%% -export([init_db/0, add_blogpost/3, get_all_posts/0, print_post/1,
+%% 	get_blogpost/1]).
 
 
 %% Call this only once!
@@ -14,7 +17,7 @@ init_db() ->
     init_tables().
 
 init_tables() ->
-    mnesia:create_table(blogpost, [{type, ordered_set}, 
+    mnesia:create_table(blogpost, [{type, set}, 
 				   {attributes, record_info(fields, blogpost)},
 				   {disc_copies, [node()]}]).
 
@@ -35,7 +38,8 @@ database_write(Record) ->
 %% Replace all spaces in title with one dash (-), to make it more
 %% representable when permalinking.
 canonicalise(Title) ->
-    string:join(string:tokens(string:to_lower(Title), " "), "-").
+    Tokens = lists:sublist(string:tokens(string:to_lower(Title), " "), 4),
+    string:join(Tokens, "-").
     
 add_blogpost(Title, Author, Body) ->
     blog_view:test_html(Body),
