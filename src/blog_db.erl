@@ -41,11 +41,12 @@ canonicalise(Title) ->
     Tokens = lists:sublist(string:tokens(string:to_lower(Title), " "), 4),
     string:join(Tokens, "-").
     
-add_blogpost(Title, Author, Body) ->
+
+add_blogpost(Title, Body) ->
     blog_view:test_html(Body),
     Post = #blogpost{timestamp = calendar:local_time(),
 		     permalink = canonicalise(Title), title = Title,
-		     author = Author, body = Body},
+		     body = Body},
     database_write(Post).
 
 get_blogpost(Permalink) ->
@@ -65,7 +66,6 @@ get_all_posts() ->
 print_post(Blogpost) ->
     Blogpost#blogpost.permalink ++ "<br/>" ++
 	Blogpost#blogpost.title ++ "<br/>" ++
-	Blogpost#blogpost.author ++ "<br/>" ++
 	Blogpost#blogpost.body ++ "<br/>" ++
 	blog_util:pretty_time(Blogpost#blogpost.timestamp).
 

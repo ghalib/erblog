@@ -30,8 +30,7 @@ loop(Req, DocRoot) ->
 		"blog" ->
 		    Req:ok({"text/html", blog_view:blog_page()});
 		[$b, $l, $o, $g, $/ | Permalink] ->
-		    Req:ok({"text/html", 
-			    blog_db:print_post(blog_db:get_blogpost(Permalink))});
+		    Req:ok({"text/html", blog_view:blog_page(Permalink)});
 		"" ->
 		    blog_util:redirect(Req, "/blog");
                 _ ->

@@ -4,8 +4,8 @@
 -include("blogpost.hrl").
 
 -compile(export_all).
--export([about_page/0,
-	blog_page/0]).
+%% -export([about_page/0,
+%% 	blog_page/0,]).
 
 
 make_topbar(Links) ->
@@ -31,28 +31,28 @@ make_page(Topbar_Links, Content) ->
 			 [{head, [],
 			   [{link, [{rel, 'stylesheet'},
 				    {type, 'text/css'},
-				    {href, 'style.css'}], 
+				    {href, '/style.css'}], 
 			     []}]},
 			  {body, [],
 			   [make_topbar(Topbar_Links),
 			    Content]}]}).
 
 about_page() ->
-    make_page([{<<"about">>, <<"About">>, "current"},
-	       {<<"code">>, <<"Code">>,	""},
-	       {<<"blog">>, <<"Blog">>,	""}],
+    make_page([{<<"/about">>, <<"About">>, "current"},
+	       {<<"/code">>, <<"Code">>,	""},
+	       {<<"/blog">>, <<"Blog">>,	""}],
 	      {'div', [{id, 'text'}],
 	       about_text()}).
  
 format_blogpost(Blogpost) ->
     {'div', [{class, 'blogpost'}],
-     [{'h3', [{class, 'blogtitle'}],
+     [{h3, [{class, 'blogtitle'}],
        [Blogpost#blogpost.title]},
       {p, [], 
        Blogpost#blogpost.body},
       {'div', [{class, 'blogfooter'}],
        [{h5, [{class, 'footerlink'}],
-	 [{a, [{href, "blog/" ++ Blogpost#blogpost.permalink}],
+	 [{a, [{href, "/blog/" ++ Blogpost#blogpost.permalink}],
 	   [<<"Link to this post">>]}]},
 	{h5, [{class, 'footerdate'}],
 	 [blog_util:pretty_time(Blogpost#blogpost.timestamp)]}]}]}.
@@ -62,11 +62,18 @@ format_all_blogposts() ->
     lists:map(fun format_blogpost/1, Blogposts).
 
 blog_page() ->
-    make_page([{<<"about">>, <<"About">>, ""},
-	       {<<"code">>, <<"Code">>, ""},
-	       {<<"blog">>, <<"Blog">>, "current"}],
+    make_page([{<<"/about">>, <<"About">>, ""},
+	       {<<"/code">>, <<"Code">>, ""},
+	       {<<"/blog">>, <<"Blog">>, "current"}],
 	      {'div', [{id, 'text'}],
 	       format_all_blogposts()}).
+
+blog_page(Permalink) ->
+    make_page([{<<"/about">>, <<"About">>, ""},
+	       {<<"/code">>, <<"Code">>, ""},
+	       {<<"/blog">>, <<"Blog">>, "current"}],
+	      {'div', [{id, 'text'}],
+	       [format_blogpost(blog_db:get_blogpost(Permalink))]}).
 
 %% @doc Called on a blog post's HTML before it is added to the
 %% database (i.e. at the beginning of blog_db:add_blogpost/3), making
