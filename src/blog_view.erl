@@ -58,7 +58,7 @@ format_blogpost(Blogpost) ->
 	 [blog_util:pretty_time(binary_to_term(Blogpost#blogpost.timestamp))]}]}]}.
 
 format_all_blogposts() ->
-    Blogposts = blog_db:get_all_posts(),
+    Blogposts = blog_db:blogposts(),
     lists:map(fun format_blogpost/1, Blogposts).
 
 blog_page() ->

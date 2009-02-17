@@ -1,10 +1,8 @@
 -module(blog_util).
+-author('ghalib@sent.com').
+-include("blogpost.hrl").
 
--export([redirect/2,
-	integers_to_lists/1,
-	pretty_time/1,
-	html_text/1,
-	length_1/1]).
+-compile(export_all).
 
 %% From mochiweb_html.erl:
 %% @type html_node() = {string(), [html_attr()], [html_node() | string()]}
@@ -61,3 +59,61 @@ pretty_time(LocalTime) ->
 %% @doc Convert a list of html_token() to an HTML document in binary form.
 html_text(Mochihtml) ->
     iolist_to_binary(mochiweb_html:to_html(Mochihtml)).
+
+
+%% db functions
+
+database_read(Table, Key) ->
+    F = fun() ->
+		mnesia:read({Table, Key})
+	end,
+    {atomic, Val} = mnesia:transaction(F),
+    Val.
+
+database_write(Record) ->	    
+    F = fun() ->
+		mnesia:write(Record)
+	end,
+    {atomic, Val} = mnesia:transaction(F),
+    Val.
+
+database_delete(Table, Key) ->
+    F = fun() ->
+		mnesia:delete({Table, Key})
+	end,
+    {atomic, Val} = mnesia:transaction(F),
+    Val.
+
+%% Replace all spaces in title with one dash (-), to make it more
+%% representable when permalinking.
+canonicalise(Title) ->
+    Tokens = lists:sublist(string:tokens(string:to_lower(Title), " "), 4),
+    string:join(Tokens, "-").
+    
+%% Taken from jaerlang
+do_query(Query) ->
+    F = fun() ->
+		qlc:e(Query) end,
+    {atomic, Val} = mnesia:transaction(F),
+    Val.
+
+%% debugging
+print_post(Blogpost) ->
+    Blogpost#blogpost.permalink ++ "<br/>" ++
+	Blogpost#blogpost.title ++ "<br/>" ++
+	Blogpost#blogpost.body ++ "<br/>" ++
+	blog_util:pretty_time(Blogpost#blogpost.timestamp).
+
+%% Call this only once!
+init_db() ->
+    mnesia:stop(),
+    mnesia:create_schema([node()]),
+    mnesia:start(),
+    init_tables().
+
+init_tables() ->
+    mnesia:create_table(blogpost, [{type, set}, 
+				   {attributes, record_info(fields, blogpost)},
+				   {disc_copies, [node()]}]).
+
+

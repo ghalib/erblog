@@ -23,11 +23,13 @@ start() ->
     blog_deps:ensure(),
     ensure_started(crypto),
     ensure_started(mnesia),
-    application:start(blog).
+    application:start(blog),
+    blog_db:start().
 
 %% @spec stop() -> ok
 %% @doc Stop the blog server.
 stop() ->
+    blog_db:stop(),
     Res = application:stop(blog),
     application:stop(mnesia),
     application:stop(crypto),
