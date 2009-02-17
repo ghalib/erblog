@@ -49,6 +49,8 @@ init([]) ->
     Web = {blog_web,
            {blog_web, start, [WebConfig]},
            permanent, 5000, worker, dynamic},
-
-    Processes = [Web],
+    Db = {blog_db,
+	  {blog_db, start, []},
+	  permanent, 5000, worker, [blog_db]},
+    Processes = [Web, Db],
     {ok, {{one_for_one, 10, 10}, Processes}}.
