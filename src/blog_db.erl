@@ -35,6 +35,13 @@ database_write(Record) ->
     {atomic, Val} = mnesia:transaction(F),
     Val.
 
+database_delete(Table, Key) ->
+    F = fun() ->
+		mnesia:delete({Table, Key})
+	end,
+    {atomic, Val} = mnesia:transaction(F),
+    Val.
+
 %% Replace all spaces in title with one dash (-), to make it more
 %% representable when permalinking.
 canonicalise(Title) ->
@@ -44,14 +51,18 @@ canonicalise(Title) ->
 
 add_blogpost(Title, Body) ->
     blog_view:test_html(Body),
-    Post = #blogpost{timestamp = calendar:local_time(),
-		     permalink = canonicalise(Title), title = Title,
-		     body = Body},
+    Post = #blogpost{timestamp = term_to_binary(calendar:local_time()),
+		     permalink = list_to_binary(canonicalise(Title)),
+		     title = list_to_binary(Title),
+		     body = term_to_binary(Body)},
     database_write(Post).
 
 get_blogpost(Permalink) ->
-    [Post] = database_read(blogpost, Permalink),
+    [Post] = database_read(blogpost, list_to_binary(Permalink)),
     Post.
+
+delete_blogpost(Permalink) ->
+    database_delete(blogpost, Permalink).
 
 %% Taken from jaerlang
 do_query(Query) ->
@@ -63,6 +74,7 @@ do_query(Query) ->
 get_all_posts() ->
     do_query(qlc:q([Post || Post <- mnesia:table(blogpost)])).
 
+%% debugging
 print_post(Blogpost) ->
     Blogpost#blogpost.permalink ++ "<br/>" ++
 	Blogpost#blogpost.title ++ "<br/>" ++

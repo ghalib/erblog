@@ -49,13 +49,13 @@ format_blogpost(Blogpost) ->
      [{h3, [{class, 'blogtitle'}],
        [Blogpost#blogpost.title]},
       {p, [], 
-       Blogpost#blogpost.body},
+       binary_to_term(Blogpost#blogpost.body)},
       {'div', [{class, 'blogfooter'}],
        [{h5, [{class, 'footerlink'}],
-	 [{a, [{href, "/blog/" ++ Blogpost#blogpost.permalink}],
+	 [{a, [{href, "/blog/" ++ binary_to_list(Blogpost#blogpost.permalink)}],
 	   [<<"Link to this post">>]}]},
 	{h5, [{class, 'footerdate'}],
-	 [blog_util:pretty_time(Blogpost#blogpost.timestamp)]}]}]}.
+	 [blog_util:pretty_time(binary_to_term(Blogpost#blogpost.timestamp))]}]}]}.
 
 format_all_blogposts() ->
     Blogposts = blog_db:get_all_posts(),
