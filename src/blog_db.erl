@@ -111,7 +111,6 @@ handle_info(_Info, State) ->
 %% The return value is ignored.
 %%--------------------------------------------------------------------
 terminate(_Reason, _State) ->
-    start(),
     ok.
 
 %%--------------------------------------------------------------------
@@ -126,8 +125,6 @@ code_change(_OldVsn, State, _Extra) ->
 %%--------------------------------------------------------------------
 
 
-%% FIXME: Currently this will overwrite an existing entry sharing the
-%% same permalink as the new one.
 add_post(Title, Body, Posts) ->
     blog_view:test_html(Body),
     Permalink = blog_util:canonicalise(Title),
@@ -135,6 +132,7 @@ add_post(Title, Body, Posts) ->
 		     permalink = list_to_binary(Permalink),
 		     title = list_to_binary(Title),
 		     body = term_to_binary(Body)},
+
     Reply = blog_util:database_write(Post),
     {Reply, [Post | Posts]}.
 

@@ -52,5 +52,6 @@ init([]) ->
     Db = {blog_db,
 	  {blog_db, start, []},
 	  permanent, 5000, worker, [blog_db]},
+
     Processes = [Web, Db],
     {ok, {{one_for_one, 10, 10}, Processes}}.
