@@ -12,9 +12,13 @@
 -behaviour(gen_server).
 
 %% API
--export([start/0, stop/0]).
-
--compile(export_all).
+-export([start/0,
+	 stop/0,
+	 add_blogpost/2,
+	 get_blogpost/1,
+	 delete_blogpost/1,
+	 blogposts/0]).
+	 
 
 %% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
@@ -83,8 +87,7 @@ handle_call({delete, Permalink}, _From, _Posts) ->
     {reply, Reply, NewPosts};
 
 handle_call(allposts, _From, Posts) ->
-    Reply = Posts,
-    {reply, Reply, Posts}.
+    {reply, Posts, Posts}.
 %%--------------------------------------------------------------------
 %% Function: handle_cast(Msg, State) -> {noreply, State} |
 %%                                      {noreply, State, Timeout} |
@@ -127,7 +130,7 @@ code_change(_OldVsn, State, _Extra) ->
 
 add_post(Title, Body, Posts) ->
     blog_view:test_html(Body),
-    Permalink = blog_util:canonicalise(Title),
+    Permalink = blog_util:gen_unique_permalink(Title),
     Post = #blogpost{timestamp = term_to_binary(calendar:local_time()),
 		     permalink = list_to_binary(Permalink),
 		     title = list_to_binary(Title),
@@ -146,7 +149,7 @@ get_post(Permalink) ->
     end.
 
 delete_post(Permalink) ->
-    blog_util:database_delete(blogpost, Permalink).
+    blog_util:database_delete(blogpost, list_to_binary(Permalink)).
 
 get_all_posts() ->
     Posts = blog_util:do_query(qlc:q([Post || Post <- mnesia:table(blogpost)])),

@@ -22,6 +22,16 @@ length_1([_H]) ->
 length_1([_H | _T]) ->
     false.
 
+%% @spec sum(list()) -> number()
+%% @doc Sums up a list of numbers
+sum(L) ->
+    sum(L, 0).
+sum([], Acc) ->
+    Acc;
+sum([H | T], Acc) ->
+    sum(T, Acc + H).
+
+
 %% @spec integers_to_lists(list()) -> list() 
 %% @doc Converts list of integers to list of string representation of
 %% said integers.
@@ -84,11 +94,41 @@ database_delete(Table, Key) ->
     {atomic, Val} = mnesia:transaction(F),
     Val.
 
+%% @spec but_last(list()) -> list()
+%% @doc Return all elements of list except last
+but_last(L) ->
+    but_last(L, []).
+
+but_last([_ | []], Acc) ->
+    lists:reverse(Acc);
+but_last([H|T], Acc) ->
+    but_last(T, [H | Acc]).
+    
 %% Replace all spaces in title with one dash (-), to make it more
 %% representable when permalinking.
 canonicalise(Title) ->
     Tokens = lists:sublist(string:tokens(string:to_lower(Title), " "), 4),
     string:join(Tokens, "-").
+    
+gen_unique_id() ->
+    TimeHash = crypto:sha(term_to_binary(now())),
+    sum(binary_to_list(TimeHash)).
+
+gen_unique_permalink(Title) ->
+    %% Check if this already exists in db.  If no, we are done.
+    %% Otherwise, check if exisiting db entry's permalink has integer
+    %% at the end of it.  If yes, then increment it, and append it to
+    %% the permalink of our new post.  Otherwise, append the integer
+    %% '1' to the permalink of our new post.
+    CanonicalTitle = canonicalise(Title),
+    
+    Permalink = case blog_db:get_post(CanonicalTitle) of
+		    false ->
+			CanonicalTitle;
+		    _Post ->
+			CanonicalTitle ++ integer_to_list(gen_unique_id())
+		end,
+    Permalink.
     
 %% Taken from jaerlang
 do_query(Query) ->
