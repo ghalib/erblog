@@ -24,7 +24,13 @@ about_text() ->
 
      {p, [], <<"If you are doing any interesting work, I would love to
      hear from you. I can be reached at <<ghalib ##at ##sent ^dot
-     #com#>>">>}].
+     #com#>>">>},
+    
+     copyright()].
+
+copyright() ->
+    {'div', [{id, 'copyright'}],
+     <<"© Ghalib Suleiman 2009">>}.
 
 make_page(Topbar_Links, Content) ->
     blog_util:html_text({html, [],

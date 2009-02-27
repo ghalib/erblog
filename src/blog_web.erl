@@ -29,6 +29,8 @@ loop(Req, DocRoot) ->
 		    Req:ok({"text/html", blog_view:about_page()});
 		"blog" ->
 		    Req:ok({"text/html", blog_view:blog_page()});
+		"blog/archives" ->
+		    Req:ok({"text/html", <<"archives">>});
 		[$b, $l, $o, $g, $/ | Permalink] ->
 		    Req:ok({"text/html", blog_view:blog_page(Permalink)});
 		"" ->
