@@ -22,9 +22,9 @@ about_text() ->
     else seems to have a website, so I thought I would hop on the
     bandwagon too.">>},
 
-     {p, [], <<"If you are doing any interesting work, I would love to
-     hear from you. I can be reached at <<ghalib ##at ##sent ^dot
-     #com#>>">>},
+     {p, [], [<<"If you are doing any interesting work, I would love to hear from you. I can be reached at ">>, 
+	      {a, [{href, 'mailto:ghalib@sent.com'}], <<"ghalib@sent.com">>},
+	      <<".">>]},
     
      copyright()].
 
