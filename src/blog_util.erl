@@ -107,7 +107,13 @@ but_last([H|T], Acc) ->
 %% Replace all spaces in title with one dash (-), to make it more
 %% representable when permalinking.
 canonicalise(Title) ->
-    Tokens = lists:sublist(string:tokens(string:to_lower(Title), " "), 4),
+    Title2 = if 
+		 is_binary(Title) ->
+		     binary_to_list(Title);
+		 true ->
+		     Title
+	     end,
+    Tokens = lists:sublist(string:tokens(string:to_lower(Title2), " "), 4),
     string:join(Tokens, "-").
     
 gen_unique_id() ->
@@ -116,10 +122,8 @@ gen_unique_id() ->
 
 gen_unique_permalink(Title) ->
     %% Check if this already exists in db.  If no, we are done.
-    %% Otherwise, check if exisiting db entry's permalink has integer
-    %% at the end of it.  If yes, then increment it, and append it to
-    %% the permalink of our new post.  Otherwise, append the integer
-    %% '1' to the permalink of our new post.
+    %% Otherwise, generate unique ID (see gen_unique_id/0) and append
+    %% this ID to title.
     CanonicalTitle = canonicalise(Title),
     
     Permalink = case blog_db:get_post(CanonicalTitle) of

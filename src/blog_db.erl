@@ -24,7 +24,7 @@
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
 	 terminate/2, code_change/3]).
 
-
+-compile(export_all).
 %%====================================================================
 %% API
 %%====================================================================
@@ -75,8 +75,8 @@ init([]) ->
 %% Description: Handling call messages
 %%--------------------------------------------------------------------
 handle_call({add, Title, Body}, _From, Posts) ->
-    {Reply, NewPosts} = add_post(Title, Body, Posts),
-    {reply, Reply, NewPosts};
+    {Reply, Post} = add_post(Title, Body),
+    {reply, Reply, [Post | Posts]};
 
 handle_call({get, Permalink}, _From, Posts) ->
     {reply, get_post(Permalink), Posts};
@@ -128,16 +128,16 @@ code_change(_OldVsn, State, _Extra) ->
 %%--------------------------------------------------------------------
 
 
-add_post(Title, Body, Posts) ->
-    blog_view:test_html(Body),
+add_post(Title, Body) when is_binary(Title) and is_binary(Body) ->
     Permalink = blog_util:gen_unique_permalink(Title),
+
     Post = #blogpost{timestamp = term_to_binary(calendar:local_time()),
 		     permalink = list_to_binary(Permalink),
-		     title = list_to_binary(Title),
-		     body = term_to_binary(Body)},
+		     title = Title,
+		     body = Body},
 
     Reply = blog_util:database_write(Post),
-    {Reply, [Post | Posts]}.
+    {Reply, Post}.
 
 get_post(Permalink) ->
     Result = blog_util:database_read(blogpost, list_to_binary(Permalink)),
