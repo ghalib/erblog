@@ -8,8 +8,8 @@
 %% 	blog_page/0,]).
 
 
-make_topbar(Links) ->
-    {'div', [{id, 'topbar'}],
+make_navbar(Links) ->
+    {'div', [{id, 'navbar'}],
      lists:map(fun({Link, Text, Classes}) ->
 		       {a, [{href, Link},
 			    {class, "navlink " ++ Classes}],
@@ -32,7 +32,7 @@ copyright() ->
     {'div', [{id, 'copyright'}],
      <<"© Ghalib Suleiman 2009">>}.
 
-make_page(Topbar_Links, Content) ->
+make_page(Navbar_Links, Content) ->
     blog_util:html_text({html, [],
 			 [{head, [],
 			   [{link, [{rel, 'stylesheet'},
@@ -40,7 +40,7 @@ make_page(Topbar_Links, Content) ->
 				    {href, '/style.css'}], 
 			     []}]},
 			  {body, [],
-			   [make_topbar(Topbar_Links),
+			   [make_navbar(Navbar_Links),
 			    Content]}]}).
 
 about_page() ->

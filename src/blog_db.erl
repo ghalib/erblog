@@ -129,6 +129,7 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 add_post(Title, Body) ->
+    blog_view:test_html(Body),
     Permalink = blog_util:gen_unique_permalink(Title),
 
     Post = #blogpost{timestamp = term_to_binary(calendar:local_time()),
