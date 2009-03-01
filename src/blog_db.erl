@@ -128,13 +128,13 @@ code_change(_OldVsn, State, _Extra) ->
 %%--------------------------------------------------------------------
 
 
-add_post(Title, Body) when is_binary(Title) and is_binary(Body) ->
+add_post(Title, Body) ->
     Permalink = blog_util:gen_unique_permalink(Title),
 
     Post = #blogpost{timestamp = term_to_binary(calendar:local_time()),
 		     permalink = list_to_binary(Permalink),
-		     title = Title,
-		     body = Body},
+		     title = list_to_binary(Title),
+		     body = term_to_binary(Body)},
 
     Reply = blog_util:database_write(Post),
     {Reply, Post}.
