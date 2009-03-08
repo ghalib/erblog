@@ -22,16 +22,6 @@
       (gms-trim (buffer-substring-no-properties para-start para-end)))))
 
 
-(defun test-html (body)
-  (erl-spawn
-    (erl-send-rpc gms-db-nodename 'blog_view 'test_html (list body))
-    (erl-receive ()
-	((['rex value]
-	  (print value))
-	 (['rex ['badrpc reason]]
-	  (message "RPC failed: %S"
-		   reason))))))
-
 (defun gms-rpc (mod fun args)
   (erl-spawn
     (erl-send-rpc gms-db-nodename mod fun args)
@@ -42,32 +32,54 @@
 	  (message "RPC failed: %S"
 		   reason))))))
 
-(defun delete-blogpost (permalink)
+(defun gms-delete-post (permalink)
   (gms-rpc 'blog_db 'delete_blogpost (list permalink)))
 
-(defun gms-publish-post (title body)
-  (gms-rpc 'blog_db 'add_blogpost (list title body)))
+(defun gms-publish-post ()
+  (interactive)
+  (let ((blogpost (assemble-post)))
+    (let ((title (car blogpost))
+	  (body (cdr blogpost)))
+      (gms-rpc 'blog_db 'add_blogpost (list title body)))))
+
+(defun gms-test-html ()
+  (interactive)
+  (let ((blogpost (assemble-post)))
+    (let ((body (cdr blogpost)))
+      (gms-rpc 'blog_view 'test_html (list body)))))
 
 
-;;; testing
+;;; HTML-generating functions. HTML being mochiweb-html, in Distel
+;;; form. i.e. Elisp vector <-> Erlang tuple, and Elisp list <->
+;;; Erlang list.
 
-(delete-blogpost "title2383")
+(defun deftitle (title)
+  title)
 
-(read "(hello
-	what
-	are
-	you)")
+(defun deflink (dest &optional body)
+  "Generate link tag"
+  `[a ([href ,(intern (concat "http://" dest))]) ,body])
 
-(test-html '("r u emacs" [a ([href http://www.google.com]) nil]
-	     [pre nil
-		  ("here is some code")]))
+(defun defpara (&rest body)
+  `[p nil ,body])
 
-(gms-publish-post "hello from emacs"
-		  '("r u emacs"
-		    [a ([href http://www.google.com]) nil]
-		    ""
-		    [pre nil
-			 ("here is some code
-followed by
-more
-code")]))
+(defun defcode (code)
+  "All code is in a PRE tag with class CODE."
+  `[pre ([class code]) ,code])
+
+(defun br ()
+  `[br nil nil])
+
+(defun assemble-post ()
+  (eval (read (concat "(list " (buffer-substring-no-properties (point-min)
+							       (point-max))
+		      ")"))))
+
+(defun get-title (blogpost)
+  (car blogpost))
+
+(defun get-body (blogpost)
+  (cdr blogpost))
+
+
+
