@@ -13,7 +13,7 @@ body {
 #text {
     float: left;
     font-family: verdana;
-    color: silver;
+    color: #DBDBDB;
     text-align: left;
     width: 34em;
     margin-bottom: 1em; 
@@ -33,7 +33,7 @@ a.navlink {
     margin-right: 2em;
 }
 
-a.navlink.current {
+a.navlink.active {
     padding-top: 0em;
     padding-bottom: 0em;
     padding-left: 0.5em;
@@ -50,6 +50,7 @@ a:hover {
 }
 
 h3.blogtitle {
+    color: silver;
     letter-spacing: 0.05em;
     font-weight: normal;
     font-size: 137%;

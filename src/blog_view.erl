@@ -7,14 +7,24 @@
 %% -export([about_page/0,
 %% 	blog_page/0,]).
 
+-define(NAVLINKS, ["about", "code", "blog"]).
 
-make_navbar(Links) ->
+
+active_class(Link, ActiveLink) ->
+    if Link =:= ActiveLink ->
+	    "active";
+       true ->
+	    ""
+    end.
+
+
+make_navbar(ActiveLink) ->
     {'div', [{id, 'navbar'}],
-     lists:map(fun({Link, Text, Classes}) ->
-		       {a, [{href, Link},
-			    {class, "navlink " ++ Classes}],
-			Text} end,
-	       Links)}.
+     lists:map(fun(NavLink) ->
+		       {a, [{href, "/" ++ NavLink},
+			    {class, "navlink " ++ active_class(NavLink, ActiveLink)}],
+			blog_util:capitalise_word(NavLink)} end,
+	       ?NAVLINKS)}.
 
 about_text() -> 
     [{p, [], <<"Hello, my name is Ghalib Suleiman (or
@@ -32,7 +42,7 @@ copyright() ->
     {'div', [{id, 'copyright'}],
      <<"© Ghalib Suleiman 2009">>}.
 
-make_page(Navbar_Links, Content) ->
+make_page(ActiveLink, Content) ->
     blog_util:html_text({html, [],
 			 [{head, [],
 			   [{link, [{rel, 'stylesheet'},
@@ -40,13 +50,10 @@ make_page(Navbar_Links, Content) ->
 				    {href, '/style.css'}], 
 			     []}]},
 			  {body, [],
-			   [make_navbar(Navbar_Links),
-			    Content]}]}).
+			   [make_navbar(ActiveLink) | Content]}]}).
 
 about_page() ->
-    make_page([{<<"/about">>, <<"About">>, "current"},
-	       {<<"/code">>, <<"Code">>,	""},
-	       {<<"/blog">>, <<"Blog">>,	""}],
+    make_page("about",
 	      {'div', [{id, 'text'}],
 	       about_text()}).
  
@@ -68,16 +75,12 @@ format_all_blogposts() ->
     lists:map(fun format_blogpost/1, Blogposts).
 
 blog_page() ->
-    make_page([{<<"/about">>, <<"About">>, ""},
-	       {<<"/code">>, <<"Code">>, ""},
-	       {<<"/blog">>, <<"Blog">>, "current"}],
-	      {'div', [{id, 'text'}],
-	       format_all_blogposts()}).
+    make_page("blog",
+	      [{'div', [{id, 'text'}],
+		format_all_blogposts()}]).
 
 blog_page(Permalink) ->
-    make_page([{<<"/about">>, <<"About">>, ""},
-	       {<<"/code">>, <<"Code">>, ""},
-	       {<<"/blog">>, <<"Blog">>, "current"}],
+    make_page("blog",
 	      {'div', [{id, 'text'}],
 	       [format_blogpost(blog_db:get_blogpost(Permalink))]}).
 
@@ -85,8 +88,7 @@ blog_page(Permalink) ->
 %% database (i.e. at the beginning of blog_db:add_blogpost/3), making
 %% sure it is well-formed.  Delegates work to HTML tree creation to
 %% mochiweb_html:to_html, in the sense that if the HTML is
-%% badly-formed, the function will throw an exception and
-%% add_blogpost/3 will fail.
+%% badly-formed, the function will throw an exception.
 test_html(HTMLBody) ->
     blog_util:html_text({html, [],
 			 [{head, [], []},

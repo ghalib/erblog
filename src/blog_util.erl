@@ -161,3 +161,5 @@ init_tables() ->
 				   {disc_copies, [node()]}]).
 
 
+capitalise_word(Word) ->
+    [string:to_upper(hd(Word)) | tl(Word)].
