@@ -54,8 +54,8 @@ make_page(ActiveLink, Content) ->
 
 about_page() ->
     make_page("about",
-	      {'div', [{id, 'text'}],
-	       about_text()}).
+	      [{'div', [{id, 'text'}],
+	       about_text()}]).
  
 format_blogpost(Blogpost) ->
     {'div', [{class, 'blogpost'}],
@@ -81,8 +81,8 @@ blog_page() ->
 
 blog_page(Permalink) ->
     make_page("blog",
-	      {'div', [{id, 'text'}],
-	       [format_blogpost(blog_db:get_blogpost(Permalink))]}).
+	      [{'div', [{id, 'text'}],
+	       [format_blogpost(blog_db:get_blogpost(Permalink))]}]).
 
 %% @doc Called on a blog post's HTML before it is added to the
 %% database (i.e. at the beginning of blog_db:add_blogpost/3), making
