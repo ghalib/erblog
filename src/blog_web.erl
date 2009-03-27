@@ -26,13 +26,13 @@ loop(Req, DocRoot) ->
         Method when Method =:= 'GET'; Method =:= 'HEAD' ->
             case Path of
 		"about" ->
-		    Req:ok({"text/html", blog_view:about_page()});
+		    html_reply(Req, blog_view:about_page());
 		"blog" ->
-		    Req:ok({"text/html", blog_view:blog_page()});
+		    html_reply(Req, blog_view:blog_page());
 		"blog/archives" ->
-		    Req:ok({"text/html", <<"archives">>});
+		    html_reply(Req, <<"archives">>);
 		[$b, $l, $o, $g, $/ | Permalink] ->
-		    Req:ok({"text/html", blog_view:blog_page(Permalink)});
+		    html_reply(Req, blog_view:blog_page(Permalink));
 		"" ->
 		    blog_util:redirect(Req, "/blog");
                 _ ->
@@ -51,3 +51,6 @@ loop(Req, DocRoot) ->
 
 get_option(Option, Options) ->
     {proplists:get_value(Option, Options), proplists:delete(Option, Options)}.
+
+html_reply(Req, Reply) ->
+    Req:ok({"text/html", Reply}).

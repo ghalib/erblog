@@ -1,9 +1,9 @@
 %%%-------------------------------------------------------------------
 %%% File    : blog_db.erl
-%%% Author  : ghalib <>
+%%% Author  : ghalib <ghalib@sent.com>
 %%% Description : 
 %%%
-%%% Created : 16 Feb 2009 by ghalib <>
+%%% Created : 16 Feb 2009 by ghalib <ghalib@sent.com>
 %%%-------------------------------------------------------------------
 -module(blog_db).
 -include_lib("stdlib/include/qlc.hrl").
