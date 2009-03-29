@@ -27,6 +27,8 @@ loop(Req, DocRoot) ->
             case Path of
 		"about" ->
 		    html_reply(Req, blog_view:about_page());
+		"code" ->
+		    html_reply(Req, blog_view:code_page());
 		"blog" ->
 		    html_reply(Req, blog_view:blog_page());
 		"blog/archives" ->

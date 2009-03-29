@@ -15,7 +15,7 @@ body {
     font-family: verdana;
     color: #DBDBDB;
     text-align: left;
-    width: 34em;
+    width: 40em;
     margin-bottom: 1em; 
     line-height: 170%;
     position: relative;
@@ -85,4 +85,8 @@ h5.footerlink {
     font-size: 0.8em;
     margin-top: 4em;
     color: #6c6d6d;
+}
+
+dd {
+    margin-bottom: 2em;
 }

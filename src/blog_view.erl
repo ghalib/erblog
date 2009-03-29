@@ -9,6 +9,17 @@
 
 -define(NAVLINKS, ["about", "code", "blog"]).
 
+%% @spec html_text([html_token()] | html_node()) -> binary()
+%% @doc Convert a list of html_token() to an HTML document in binary form.
+html_text(Mochihtml) ->
+    iolist_to_binary(mochiweb_html:to_html(doctype()) ++ 
+		     mochiweb_html:to_html(Mochihtml)).
+
+doctype() ->
+    {doctype,
+     [<<"html">>, <<"PUBLIC">>,
+      <<"-//W3C//DTD XHTML 1.0 Transitional//EN">>,
+      <<"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">>]}.
 
 active_class(Link, ActiveLink) ->
     if Link =:= ActiveLink ->
@@ -16,6 +27,15 @@ active_class(Link, ActiveLink) ->
        true ->
 	    ""
     end.
+
+html_deflist(Items) ->
+    {dl, [], lists:flatten(lists:map(fun({Item, Def}) ->
+					     [{dt, [], [Item]},
+					      {dd, [], Def}] end,
+				     Items))}.    
+
+html_link(Address, Description) ->
+    {a, [{href, Address}], Description}.
 
 
 make_navbar(ActiveLink) ->
@@ -43,19 +63,40 @@ copyright() ->
      <<"© Ghalib Suleiman 2009">>}.
 
 make_page(ActiveLink, Content) ->
-    blog_util:html_text({html, [],
-			 [{head, [],
-			   [{link, [{rel, 'stylesheet'},
-				    {type, 'text/css'},
-				    {href, '/style.css'}], 
-			     []}]},
-			  {body, [],
-			   [make_navbar(ActiveLink) | Content]}]}).
+    html_text({html, [],
+	       [{title, [], <<"Ghalib Suleiman">>},
+		{head, [],
+		 [{link, [{rel, 'stylesheet'},
+			  {type, 'text/css'},
+			  {href, '/style.css'}], 
+		   []}]},
+		{body, [],
+		 [make_navbar(ActiveLink) | Content]}]}).
 
 about_page() ->
     make_page("about",
 	      [{'div', [{id, 'text'}],
 	       about_text()}]).
+
+code_listing() ->
+    html_deflist([
+		  {html_link(<<"/files/bloom.py">>, <<"bloom.py">>),
+		   [<<"A Bloom filter written in Python. A nice overview on Bloom filters can be found ">>, 
+		   html_link(<<"http://www.internetmathematics.org/volumes/1/4/Broder.pdf">>, <<"here">>),
+		    <<" (warning: PDF).">>]},
+
+		  {html_link(<<"/files/scheme.tar.gz">>, <<"Arithmetic Scheme">>),
+		   [<<"A toy Scheme calculator written in C++. Basically a Scheme interpreter where the only functions are basic arithmetic. A company I once applied to work for asked me for a C++ code sample that was more than 1k lines of code. I didn't have anything on me as I don't normally write C++ at home, so I quickly whipped this up.">>]},
+		  
+		  {html_link(<<"/files/sicp-solutions.tar.gz">>, <<"SICP solutions">>),
+		   [<<"Solutions to the timeless ">>, html_link(<<"http://www.amazon.com/dp/0262011530/">>, <<"SICP">>), <<" (up to half of chapter 4). I haven't touched these in nearly two years; I got to the AMB evaluator section and got distracted with other things. Haven't gone back since, but hopefully will one day.">>]}
+		 ]).
+
+code_page() ->
+    make_page("code",
+	      [{'div', [{id, 'text'}],
+		[code_listing()]}]).
+		
  
 format_blogpost(Blogpost) ->
     {'div', [{class, 'blogpost'}],
@@ -90,6 +131,6 @@ blog_page(Permalink) ->
 %% mochiweb_html:to_html, in the sense that if the HTML is
 %% badly-formed, the function will throw an exception.
 test_html(HTMLBody) ->
-    blog_util:html_text({html, [],
-			 [{head, [], []},
-			  {body, [], HTMLBody}]}).
+    html_text({html, [],
+	       [{head, [], []},
+		{body, [], HTMLBody}]}).
