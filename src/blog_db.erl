@@ -16,6 +16,7 @@
 	 stop/0,
 	 add_blogpost/2,
 	 get_blogpost/1,
+	 most_recent_blogpost/0,
 	 delete_blogpost/1,
 	 blogposts/0]).
 	 
@@ -43,6 +44,9 @@ add_blogpost(Title, Body) ->
 
 get_blogpost(Permalink) ->
     gen_server:call(?MODULE, {get, Permalink}).
+
+most_recent_blogpost() ->
+    gen_server:call(?MODULE, {most_recent}).
 
 delete_blogpost(Permalink) ->
     gen_server:call(?MODULE, {delete, Permalink}).
@@ -80,6 +84,9 @@ handle_call({add, Title, Body}, _From, Posts) ->
 
 handle_call({get, Permalink}, _From, Posts) ->
     {reply, get_post(Permalink), Posts};
+
+handle_call({most_recent}, _From, Posts) ->
+    {reply, hd(Posts), Posts};
 
 handle_call({delete, Permalink}, _From, _Posts) ->
     Reply = delete_post(Permalink),

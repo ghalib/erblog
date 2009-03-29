@@ -118,7 +118,7 @@ format_all_blogposts() ->
 blog_page() ->
     make_page("blog",
 	      [{'div', [{id, 'text'}],
-		format_all_blogposts()}]).
+		[format_blogpost(blog_db:most_recent_blogpost())]}]).
 
 blog_page(Permalink) ->
     make_page("blog",
