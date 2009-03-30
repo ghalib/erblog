@@ -31,13 +31,13 @@ a.navlink {
     color: #8abdd6;
     text-decoration: none;
     margin-right: 2em;
-}
-
-a.navlink.active {
     padding-top: 0em;
     padding-bottom: 0em;
     padding-left: 0.5em;
     padding-right: 0.5em;
+}
+
+a.navlink.active {
     border-width: 1px;
     border-left-style: solid;
     border-bottom-style: none;

@@ -63,13 +63,15 @@ copyright() ->
      <<"© Ghalib Suleiman 2009">>}.
 
 make_page(ActiveLink, Content) ->
-    html_text({html, [],
-	       [{title, [], <<"Ghalib Suleiman">>},
-		{head, [],
+    html_text({html, [{xmlns, <<"http://www.w3.org/1999/xhtml">>},
+		      {'xml:lang', <<"en">>},
+		      {lang, <<"en">>}],
+	       [{head, [],
 		 [{link, [{rel, 'stylesheet'},
 			  {type, 'text/css'},
 			  {href, '/style.css'}], 
-		   []}]},
+		   []},
+		  {title, [], <<"Ghalib Suleiman">>}]},
 		{body, [],
 		 [make_navbar(ActiveLink) | Content]}]}).
 
