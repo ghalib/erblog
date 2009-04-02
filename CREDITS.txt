@@ -1,0 +1,4 @@
+Thanks to:
+
+- Bob Ippolito and co. for Mochiweb.
+- Luke Gorrie and co. for Distel. 
