@@ -2,7 +2,21 @@
 -author('ghalib@sent.com').
 -include("blogpost.hrl").
 
--compile(export_all).
+-export([redirect/2,
+	 length_1/1,
+	 sum/1,
+	 integers_to_lists/1,
+	 database_read/2,
+	 database_write/1,
+	 database_delete/2,
+	 but_last/1,
+	 gen_unique_permalink/1,
+	 pretty_time/1,
+	 do_query/1,
+	 print_post/1,
+	 capitalise/1,
+	 init_db/0
+	]).
 
 %% From mochiweb_html.erl:
 %% @type html_node() = {string(), [html_attr()], [html_node() | string()]}
@@ -155,5 +169,5 @@ init_tables() ->
 				   {disc_copies, [node()]}]).
 
 
-capitalise_word(Word) ->
+capitalise(Word) ->
     [string:to_upper(hd(Word)) | tl(Word)].

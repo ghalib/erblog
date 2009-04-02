@@ -6,6 +6,8 @@
 %%% Created : 16 Feb 2009 by ghalib <ghalib@sent.com>
 %%%-------------------------------------------------------------------
 -module(blog_db).
+-author('ghalib <ghalib@sent.com>').
+
 -include_lib("stdlib/include/qlc.hrl").
 -include("blogpost.hrl").
 
@@ -16,6 +18,7 @@
 	 stop/0,
 	 add_blogpost/2,
 	 get_blogpost/1,
+	 get_post/1,
 	 most_recent_blogpost/0,
 	 delete_blogpost/1,
 	 blogposts/0]).

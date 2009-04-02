@@ -4,10 +4,7 @@ html {
 
 body {
     background-color: #000716;
-    margin-left: 8em;
-    margin-right: 8em;
-    margin-top: 3em;
-    margin-bottom: 3em;
+    margin: 3em 5em;
 }
 
 #text {
@@ -15,10 +12,10 @@ body {
     font-family: verdana;
     color: #DBDBDB;
     text-align: left;
-    width: 40em;
+    width: 38em;
     margin-bottom: 1em; 
     line-height: 170%;
-    position: relative;
+
 }
 
 a {
@@ -35,6 +32,13 @@ a.navlink {
     padding-bottom: 0em;
     padding-left: 0.5em;
     padding-right: 0.5em;
+}
+
+a.archives {
+    float: right;
+    font-size: 120%;
+    letter-spacing: 0.05em;
+    margin-top: 1em;
 }
 
 a.navlink.active {
@@ -64,11 +68,11 @@ h3.blogtitle {
     letter-spacing: 0.15em;
 }
 
-div.blogpost {
+.blogpost {
     margin-bottom: 7em;
 }
 
-div.blogfooter {
+.blogfooter {
     margin-top: 0em;
 }
 
@@ -89,4 +93,10 @@ h5.footerlink {
 
 dd {
     margin-bottom: 2em;
+}
+
+.archivelist {
+    line-height: 2em;
+    font-size: 105%;
+    padding-left: 2em;
 }

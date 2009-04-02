@@ -3,9 +3,12 @@
 
 -include("blogpost.hrl").
 
--compile(export_all).
-%% -export([about_page/0,
-%% 	blog_page/0,]).
+-export([about_page/0,
+	 blog_page/0,
+	 blog_page/1,
+	 code_page/0,
+	 archives_page/0,
+	 test_html/1]).
 
 -define(NAVLINKS, ["about", "code", "blog"]).
 
@@ -37,13 +40,17 @@ html_deflist(Items) ->
 html_link(Address, Description) ->
     {a, [{href, Address}], Description}.
 
+html_list(Items, Class) ->
+    {ul, [{class, Class}], lists:map(fun(Item) ->
+			       {li, [], [Item]} end,
+		       Items)}.
 
 make_navbar(ActiveLink) ->
     {'div', [{id, 'navbar'}],
      lists:map(fun(NavLink) ->
 		       {a, [{href, "/" ++ NavLink},
 			    {class, "navlink " ++ active_class(NavLink, ActiveLink)}],
-			blog_util:capitalise_word(NavLink)} end,
+			blog_util:capitalise(NavLink)} end,
 	       ?NAVLINKS)}.
 
 about_text() -> 
@@ -113,19 +120,37 @@ format_blogpost(Blogpost) ->
 	{h5, [{class, 'footerdate'}],
 	 [blog_util:pretty_time(binary_to_term(Blogpost#blogpost.timestamp))]}]}]}.
 
+%% For debugging
 format_all_blogposts() ->
     Blogposts = blog_db:blogposts(),
     lists:map(fun format_blogpost/1, Blogposts).
 
+format_all_titles() ->
+    Blogposts = blog_db:blogposts(),
+    TitleLinks = lists:map(fun(Blogpost) ->
+				   html_link(Blogpost#blogpost.permalink,
+					     Blogpost#blogpost.title) end,
+			   Blogposts),
+    html_list(TitleLinks, 'archivelist').
+
 blog_page() ->
     make_page("blog",
-	      [{'div', [{id, 'text'}],
+	      [{a, [{href, '/blog/archives'},
+		    {class, 'navlink archives'}], <<"Archives">>},
+	       {'div', [{id, 'text'}],
 		[format_blogpost(blog_db:most_recent_blogpost())]}]).
 
 blog_page(Permalink) ->
     make_page("blog",
-	      [{'div', [{id, 'text'}],
+	      [{a, [{href, '/blog/archives'},
+		    {class, 'navlink archives'}], <<"Archives">>},
+	       {'div', [{id, 'text'}],
 	       [format_blogpost(blog_db:get_blogpost(Permalink))]}]).
+
+archives_page() ->
+    make_page("", 
+	      [{'div', [{id, 'text'}],
+		[format_all_titles()]}]).
 
 %% @doc Called on a blog post's HTML before it is added to the
 %% database (i.e. at the beginning of blog_db:add_blogpost/3), making

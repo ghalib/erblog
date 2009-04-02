@@ -32,7 +32,7 @@ loop(Req, DocRoot) ->
 		"blog" ->
 		    html_reply(Req, blog_view:blog_page());
 		"blog/archives" ->
-		    html_reply(Req, <<"archives">>);
+		    html_reply(Req, blog_view:archives_page());
 		[$b, $l, $o, $g, $/ | Permalink] ->
 		    html_reply(Req, blog_view:blog_page(Permalink));
 		"" ->
