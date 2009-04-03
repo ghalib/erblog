@@ -1,0 +1,13 @@
+A test post
+
+(read "(\"Today I went to work at 8:52am. I was so tired, I nearly died. Work is
+so so boring, it makes me want to chew my own arm off and hurl it at
+my stupidly tiny screen. At least I get my own office. But sometimes I
+wonder, when will I get a job? Will I work at\" [a, '([href
+http://www.google.com])] "? Or perhaps" [a, '([href
+http://www.itasoftware.com])] "?")")
+
+
+
+
+(read "(x y 3 4)")
