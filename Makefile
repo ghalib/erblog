@@ -1,5 +1,5 @@
 all:
-	(cd src;$(MAKE))
+	(mkdir -p ebin; cd src; $(MAKE))
 
 clean:
-	(cd src;$(MAKE) clean)
+	(cd src; $(MAKE) clean)
