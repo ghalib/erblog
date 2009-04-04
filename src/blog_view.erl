@@ -98,7 +98,10 @@ code_listing() ->
 		   [<<"A toy Scheme calculator written in C++. Basically a Scheme interpreter where the only functions are basic arithmetic. A company I once applied to work for asked me for a C++ code sample that was more than 1k lines of code. I didn't have anything on me as I don't normally write C++ at home, so I quickly whipped this up.">>]},
 		  
 		  {html_link(<<"/files/sicp-solutions.tar.gz">>, <<"SICP solutions">>),
-		   [<<"Solutions to the timeless ">>, html_link(<<"http://www.amazon.com/dp/0262011530/">>, <<"SICP">>), <<" (up to half of chapter 4). I haven't touched these in nearly two years; I got to the AMB evaluator section and got distracted with other things. Haven't gone back since, but hopefully will one day.">>]}
+		   [<<"Solutions to the timeless ">>, html_link(<<"http://www.amazon.com/dp/0262011530/">>, <<"SICP">>), <<" (up to half of chapter 4). I haven't touched these in nearly two years; I got to the AMB evaluator section and got distracted with other things. Haven't gone back since, but hopefully will one day.">>]},
+		  
+		  {html_link(<<"/files/.emacs">>, <<".emacs">>),
+		   [<<"My Emacs startup file.">>]}
 		 ]).
 
 code_page() ->
