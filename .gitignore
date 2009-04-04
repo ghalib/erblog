@@ -1,0 +1,8 @@
+*~
+db
+*ebin
+*/erl_crash.dump
+.gitignore
+*DS_Store
+priv/www/files/*
+*.svn
