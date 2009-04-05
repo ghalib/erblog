@@ -24,6 +24,13 @@ doctype() ->
       <<"-//W3C//DTD XHTML 1.0 Transitional//EN">>,
       <<"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">>]}.
 
+google_analytics_embed() ->
+    [{script, [{type, 'text/javascript'}],
+     <<"var gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\"); document.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E\"));">>},
+     {script, [{type, 'text/javascript'}],
+      <<"try {var pageTracker = _gat._getTracker(\"UA-8061888-1\");
+pageTracker._trackPageview();} catch(err) {}">>}].
+
 active_class(Link, ActiveLink) ->
     if Link =:= ActiveLink ->
 	    "active";
@@ -80,7 +87,8 @@ make_page(ActiveLink, Content) ->
 		   []},
 		  {title, [], <<"Ghalib Suleiman">>}]},
 		{body, [],
-		 [make_navbar(ActiveLink) | Content]}]}).
+		 lists:flatten([make_navbar(ActiveLink), Content, 
+			       google_analytics_embed()])}]}).
 
 about_page() ->
     make_page("about",
@@ -106,8 +114,8 @@ code_listing() ->
 
 code_page() ->
     make_page("code",
-	      [{'div', [{id, 'text'}],
-		[code_listing()]}]).
+	      {'div', [{id, 'text'}],
+		       [code_listing()]}).
 		
  
 format_blogpost(Blogpost) ->
@@ -152,8 +160,8 @@ blog_page(Permalink) ->
 
 archives_page() ->
     make_page("", 
-	      [{'div', [{id, 'text'}],
-		[format_all_titles()]}]).
+	      {'div', [{id, 'text'}],
+	       [format_all_titles()]}).
 
 %% @doc Called on a blog post's HTML before it is added to the
 %% database (i.e. at the beginning of blog_db:add_blogpost/3), making
