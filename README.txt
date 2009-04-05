@@ -16,7 +16,9 @@ functions at the bottom of blog.el for complete list)
 post results in valid HTML, then do an M-x gms-publish-post to publish
 your blogpost
 
-
+Documentation about how the app works is in the source itself. Basic
+dispatch followed by database read (see dispatching in
+src/blog_web.erl and trace from there).
 
 
 
