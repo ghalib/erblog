@@ -130,8 +130,8 @@ code_page() ->
 		
  
 format_blogpost(Blogpost) ->
-    {'div', [{class, 'blogpost'}],
-     [{h3, [{class, 'blogtitle'}],
+    [{'div', [{class, 'blogpost'}],
+      [{h3, [{class, 'blogtitle'}],
        [Blogpost#blogpost.title]},
       {p, [], 
        binary_to_term(Blogpost#blogpost.body)},
@@ -140,7 +140,8 @@ format_blogpost(Blogpost) ->
 	 [{a, [{href, "/blog/" ++ binary_to_list(Blogpost#blogpost.permalink)}],
 	   [<<"Link to this post">>]}]},
 	{h5, [{class, 'footerdate'}],
-	 [blog_util:pretty_time(binary_to_term(Blogpost#blogpost.timestamp))]}]}]}.
+	 [blog_util:pretty_time(binary_to_term(Blogpost#blogpost.timestamp))]}]}]}
+     | disqus_embed()].
 
 %% For debugging
 format_all_blogposts() ->
@@ -160,15 +161,14 @@ blog_page() ->
 	      [{a, [{href, '/blog/archives'},
 		    {class, 'navlink archives'}], <<"Archives">>},
 	       {'div', [{id, 'text'}],
-		[format_blogpost(blog_db:most_recent_blogpost()) |
-		 disqus_embed()]}]).
+		format_blogpost(blog_db:most_recent_blogpost())}]).
 
 blog_page(Permalink) ->
     make_page("blog",
 	      [{a, [{href, '/blog/archives'},
 		    {class, 'navlink archives'}], <<"Archives">>},
 	       {'div', [{id, 'text'}],
-	       [format_blogpost(blog_db:get_blogpost(Permalink))]}]).
+		format_blogpost(blog_db:get_blogpost(Permalink))}]).
 
 archives_page() ->
     make_page("", 
