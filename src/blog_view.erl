@@ -87,7 +87,7 @@ copyright() ->
     {'div', [{id, 'copyright'}],
      <<"© Ghalib Suleiman 2009">>}.
 
-make_page(ActiveLink, Content) ->
+make_page(Title, ActiveLink, Content) ->
     html_text({html, [{xmlns, <<"http://www.w3.org/1999/xhtml">>},
 		      {'xml:lang', <<"en">>},
 		      {lang, <<"en">>}],
@@ -96,13 +96,14 @@ make_page(ActiveLink, Content) ->
 			  {type, 'text/css'},
 			  {href, '/style.css'}], 
 		   []},
-		  {title, [], <<"Ghalib Suleiman">>}]},
+		  {title, [], Title}]},
 		{body, [],
 		 lists:flatten([make_navbar(ActiveLink), Content, 
 			       google_analytics_embed()])}]}).
 
 about_page() ->
-    make_page("about",
+    make_page("About",
+	      "about",
 	      [{'div', [{id, 'text'}],
 	       about_text()}]).
 
@@ -124,7 +125,8 @@ code_listing() ->
 		 ]).
 
 code_page() ->
-    make_page("code",
+    make_page("Code",
+	      "code",
 	      {'div', [{id, 'text'}],
 		       [code_listing()]}).
 		
@@ -157,21 +159,26 @@ format_all_titles() ->
     html_list(TitleLinks, 'archivelist').
 
 blog_page() ->
-    make_page("blog",
+    Blogpost = blog_db:most_recent_blogpost(),
+    make_page(Blogpost#blogpost.title,
+	      "blog",
 	      [{a, [{href, '/blog/archives'},
 		    {class, 'navlink archives'}], <<"Archives">>},
 	       {'div', [{id, 'text'}],
 		format_blogpost(blog_db:most_recent_blogpost())}]).
 
 blog_page(Permalink) ->
-    make_page("blog",
+    Blogpost = blog_db:get_blogpost(Permalink),
+    make_page(Blogpost#blogpost.title,
+	      "blog",
 	      [{a, [{href, '/blog/archives'},
 		    {class, 'navlink archives'}], <<"Archives">>},
 	       {'div', [{id, 'text'}],
 		format_blogpost(blog_db:get_blogpost(Permalink))}]).
 
 archives_page() ->
-    make_page("", 
+    make_page(<<"Blog Archives">>,
+	      "", 
 	      {'div', [{id, 'text'}],
 	       [format_all_titles()]}).
 
