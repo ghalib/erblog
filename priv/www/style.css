@@ -109,3 +109,8 @@ dd {
     margin-top: 2em;
     margin-bottom: 4em;
 }
+
+.equation {
+    background-color: white;
+    margin: 1.5em;
+}

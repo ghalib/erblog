@@ -1,30 +1,14 @@
-(setq gms-db-nodename erl-nodename-cache)
-
-(defun gms-trim (str)
-     "Trim whitespace from both sides of string. Taken from emacswiki."
-     (let ((s (if (symbolp str)(symbol-name str) str)))
-        (save-excursion
-          (while (and
-	          (not (null (string-match "^\\( \\|\f\\|\t\\|\n\\)" s)))
-	          (> (length s) (string-match "^\\( \\|\f\\|\t\\|\n\\)" s)))
-	    (setq s (replace-match "" t nil s)))
-          (while (and
-	          (not (null (string-match "\\( \\|\f\\|\t\\|\n\\)$" s)))
-	          (> (length s) (string-match "\\( \\|\f\\|\t\\|\n\\)$" s)))
-	    (setq s (replace-match "" t nil s))))
-        s))
-
-(defun gms-get-paragraph (para-start)
+(defun eb-get-paragraph (para-start)
   (save-excursion
     (let (para-end)
       (forward-paragraph)
       (setq para-end (point))
-      (gms-trim (buffer-substring-no-properties para-start para-end)))))
+      (eb-trim (buffer-substring-no-properties para-start para-end)))))
 
 
-(defun gms-rpc (mod fun args)
+(defun eb-rpc (mod fun args)
   (erl-spawn
-    (erl-send-rpc gms-db-nodename mod fun args)
+    (erl-send-rpc erl-nodename-cache mod fun args)
     (erl-receive ()
 	((['rex value]
 	  (print value))
@@ -32,21 +16,21 @@
 	  (message "RPC failed: %S"
 		   reason))))))
 
-(defun gms-delete-post (permalink)
-  (gms-rpc 'blog_db 'delete_blogpost (list permalink)))
+(defun eb-delete-post (permalink)
+  (eb-rpc 'blog_db 'delete_blogpost (list permalink)))
 
-(defun gms-publish-post ()
+(defun eb-publish-post ()
   (interactive)
   (let ((blogpost (assemble-post)))
     (let ((title (car blogpost))
 	  (body (cdr blogpost)))
-      (gms-rpc 'blog_db 'add_blogpost (list title body)))))
+      (eb-rpc 'blog_db 'add_blogpost (list title body)))))
 
-(defun gms-test-html ()
+(defun eb-test-html ()
   (interactive)
   (let ((blogpost (assemble-post)))
     (let ((body (cdr blogpost)))
-      (gms-rpc 'blog_view 'test_html (list body)))))
+      (eb-rpc 'blog_view 'test_html (list body)))))
 
 
 ;;; HTML-generating functions. HTML being mochiweb-html, in Distel
@@ -67,6 +51,15 @@
   "All code is in a PRE tag with class CODE."
   `[pre ([class code]) ,code])
 
+(defun defimg (imgsrc &optional class)
+  `[img ([src ,imgsrc] [class ,class]) ()])
+
+(defun center (elem)
+  `[center () (,elem)])
+
+(defun defeq (imgsrc)
+  (defpara (center (defimg imgsrc 'equation))))
+
 (defun br ()
   `[br nil nil])
 
@@ -83,3 +76,6 @@
 
 
 
+(setq x 1)
+
+`(,x)
