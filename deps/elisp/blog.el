@@ -73,9 +73,3 @@
 
 (defun get-body (blogpost)
   (cdr blogpost))
-
-
-
-(setq x 1)
-
-`(,x)
