@@ -108,7 +108,7 @@ about_page() ->
 	      [{'div', [{id, 'text'}],
 	       about_text()}]).
 
-%% blah
+
 code_listing() ->
     html_deflist([
 		  {html_link(<<"http://github.com/ghalib/erblog/tree/master">>, <<"ErBlog">>),
