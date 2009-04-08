@@ -110,6 +110,8 @@ about_page() ->
 
 code_listing() ->
     html_deflist([
+		  {html_link(<<"http://github.com/ghalib/erblog/tree/master">>, <<"ErBlog">>),
+		   <<"A blog app I wrote in Erlang (built on the Mochiweb HTTP library) that powers this site. Also has some Emacs Elisp that allows me to author and publish my blog posts from within Emacs (without having to write any raw HTML of course), remotely. I'll write a blog post with more detail soon, but for now you can look at the (very early and somewhat raw) source code.">>},
 		  {html_link(<<"/files/bloom.py">>, <<"bloom.py">>),
 		   [<<"A Bloom filter written in Python. A nice overview on Bloom filters can be found ">>, 
 		   html_link(<<"http://www.internetmathematics.org/volumes/1/4/Broder.pdf">>, <<"here">>),
