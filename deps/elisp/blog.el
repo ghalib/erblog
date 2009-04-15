@@ -17,6 +17,7 @@
 		   reason))))))
 
 (defun eb-delete-post (permalink)
+  "Deletes post from server, given said post's permalink"
   (eb-rpc 'blog_db 'delete_blogpost (list permalink)))
 
 (defun eb-publish-post ()
@@ -27,6 +28,9 @@
       (eb-rpc 'blog_db 'add_blogpost (list title body)))))
 
 (defun eb-test-html ()
+  "Useful for checking if the Elisp parses into HTML correctly.
+Sends the Elisp post to server, and if parses correct, returns
+the post in raw HTML text.  Otherwise returns error."
   (interactive)
   (let ((blogpost (assemble-post)))
     (let ((body (cdr blogpost)))
@@ -42,7 +46,7 @@
 
 (defun deflink (dest &optional body)
   "Generate link tag"
-  `[a ([href ,(intern (concat "http://" dest))]) ,body])
+  `[a ([href ,dest]) ,body])
 
 (defun defpara (&rest body)
   `[p nil ,body])
@@ -67,6 +71,8 @@
   `[ol ([type ,type]) ,(mapcar (lambda (item)
 				 `[li () ,item]) items)])
 
+(defun inlinecode (code)
+  `[code () (,code)])
 
 (defun assemble-post ()
   (eval (read (concat "(list " (buffer-substring-no-properties (point-min)
