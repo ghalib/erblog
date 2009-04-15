@@ -64,7 +64,9 @@
   `[br nil nil])
 
 (defun defolist (type &rest items)
-  `[ol ([type ,type]) ,(mapcar (lambda (item) `[li () (,item)]) items)])
+  `[ol ([type ,type]) ,(mapcar (lambda (item)
+				 `[li () ,item]) items)])
+
 
 (defun assemble-post ()
   (eval (read (concat "(list " (buffer-substring-no-properties (point-min)
