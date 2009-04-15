@@ -42,6 +42,8 @@ the post in raw HTML text.  Otherwise returns error."
 ;;; Erlang list.
 
 (defun deftitle (title)
+  "Has to appear at the very top of the post.  Otherwise things
+  cock up."
   title)
 
 (defun deflink (dest &optional body)
