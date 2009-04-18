@@ -69,8 +69,8 @@ the post in raw HTML text.  Otherwise returns error."
 (defun br ()
   `[br nil nil])
 
-(defun defolist (type &rest items)
-  `[ol ([type ,type]) ,(mapcar (lambda (item)
+(defun defnumlist (&rest items)
+  `[ol ([type 1]) ,(mapcar (lambda (item)
 				 `[li () ,item]) items)])
 
 (defun inlinecode (code)
