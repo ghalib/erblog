@@ -15,8 +15,8 @@
 %% @spec html_text([html_token()] | html_node()) -> binary()
 %% @doc Convert a list of html_token() to an HTML document in binary form.
 html_text(Mochihtml) ->
-    iolist_to_binary(mochiweb_html:to_html(doctype()) ++ 
-		     mochiweb_html:to_html(Mochihtml)).
+    iolist_to_binary([mochiweb_html:to_html(doctype()),
+		      mochiweb_html:to_html(Mochihtml)]).
 
 doctype() ->
     {doctype,
