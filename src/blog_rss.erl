@@ -7,6 +7,7 @@
 
 -compile(export_all).
 
+%% For description, just take first tag element of the post's body.
 make_item(Blogpost) ->
     iolist_to_binary([<<"<item>">>, 
 		      <<"<title>">>,
