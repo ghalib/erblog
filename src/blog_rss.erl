@@ -20,6 +20,9 @@ make_item(Blogpost) ->
 		      <<"http://www.ghalib.me/blog/">>, 
 		      Blogpost#blogpost.permalink,
 		      <<"</link>">>,
+		      <<"<pubDate>">>,
+		      httpd_util:rfc1123_date(binary_to_term(Blogpost#blogpost.timestamp)),
+		      <<"</pubDate>">>,
 		      <<"</item>">>]).
 
 make_items(Blogposts) ->
