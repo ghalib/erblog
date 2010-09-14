@@ -74,7 +74,7 @@ make_navbar(ActiveLink) ->
 about_text() -> 
     [{p, [], <<"Hello, my name is Ghalib Suleiman (or
     Sulaiman). I graduated from university in December 2006, and
-    currently live in Cambridge, Massachusetts, USA. Everyone else seems to
+    currently live in northern Virginia, USA. Everyone else seems to
     have a website, so I thought I would hop on the bandwagon
     too.">>},
 
