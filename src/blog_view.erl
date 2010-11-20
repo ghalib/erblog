@@ -74,7 +74,7 @@ make_navbar(ActiveLink) ->
 about_text() -> 
     [{p, [], <<"Hello, my name is Ghalib Suleiman (or
     Sulaiman). I graduated from university in December 2006, and
-    currently live in northern Virginia, USA. Everyone else seems to
+    currently live in Cambridge, Massachusetts, USA. Everyone else seems to
     have a website, so I thought I would hop on the bandwagon
     too.">>},
 
@@ -86,7 +86,7 @@ about_text() ->
 
 copyright() ->
     {'div', [{id, 'copyright'}],
-     <<"© Ghalib Suleiman 2009">>}.
+     <<"Â© Ghalib Suleiman 2010">>}.
 
 make_page(Title, ActiveLink, Content) ->
     html_text({html, [{xmlns, <<"http://www.w3.org/1999/xhtml">>},
@@ -116,12 +116,15 @@ about_page() ->
 
 code_listing() ->
     html_deflist([
-		  {html_link(<<"http://github.com/ghalib/erblog/tree/master">>, <<"ErBlog">>),
+		  {html_link(<<"http://github.com/ghalib/erblog">>, <<"ErBlog">>),
 		   <<"A blog app I wrote in Erlang (built on the Mochiweb HTTP library) that powers this site. Also has some Emacs Elisp that allows me to author and publish my blog posts from within Emacs (without having to write any raw HTML of course), remotely. I'll write a blog post with more detail soon, but for now you can look at the (very early and somewhat raw) source code.">>},
 		  {html_link(<<"/files/bloom.py">>, <<"bloom.py">>),
 		   [<<"A Bloom filter written in Python. A nice overview on Bloom filters can be found ">>, 
 		   html_link(<<"http://www.internetmathematics.org/volumes/1/4/Broder.pdf">>, <<"here">>),
 		    <<" (warning: PDF).">>]},
+		  
+		  {html_link(<<"http://github.com/ghalib/wsd">>, <<"wsd.py">>),
+		   <<"Word-sense disambiguation using naive Bayes (from the department of 'made-up problems that the real world does not care about').">>},
 
 		  {html_link(<<"/files/scheme.tar.gz">>, <<"Arithmetic Scheme">>),
 		   [<<"A toy Scheme calculator written in C++. Basically a Scheme interpreter where the only functions are basic arithmetic. A company I once applied to work for asked me for a C++ code sample that was more than 1k lines of code. I didn't have anything on me as I don't normally write C++ at home, so I quickly whipped this up.">>]},
