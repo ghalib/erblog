@@ -86,7 +86,7 @@ about_text() ->
 
 copyright() ->
     {'div', [{id, 'copyright'}],
-     <<"Â© Ghalib Suleiman 2010">>}.
+     <<"© Ghalib Suleiman 2010">>}.
 
 make_page(Title, ActiveLink, Content) ->
     html_text({html, [{xmlns, <<"http://www.w3.org/1999/xhtml">>},
