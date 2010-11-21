@@ -121,7 +121,7 @@ code_listing() ->
 		  {html_link(<<"/files/bloom.py">>, <<"bloom.py">>),
 		   [<<"A Bloom filter written in Python. A nice overview on Bloom filters can be found ">>, 
 		   html_link(<<"http://www.internetmathematics.org/volumes/1/4/Broder.pdf">>, <<"here">>),
-		    <<" (warning: PDF) test.">>]},
+		    <<" (warning: PDF).">>]},
 		  
 		  {html_link(<<"http://github.com/ghalib/wsd">>, <<"wsd.py">>),
 		   <<"Word-sense disambiguation using naive Bayes (from the department of 'made-up problems that the real world does not care about').">>},
