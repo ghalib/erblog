@@ -1,4 +1,4 @@
-(deftitle "Projector/Display on the Inside of Cubicle Walls")
+(deftitle "Display on the Inside of Cubicle Walls")
 
 (defpara "For most technical jobs where the employees reside
 in cubicles, the sight of coworkers gathering in someone's cube

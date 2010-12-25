@@ -17,6 +17,7 @@
 		   reason))))))
 
 (defun eb-delete-post (permalink)
+  (interactive "MEnter permalink to delete: ")
   "Deletes post from server, given said post's permalink"
   (eb-rpc 'blog_db 'delete_blogpost (list permalink)))
 
