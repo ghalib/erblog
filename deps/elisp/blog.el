@@ -36,7 +36,6 @@ the post in raw HTML text.  Otherwise returns error."
     (let ((body (cdr blogpost)))
       (eb-rpc 'blog_view 'test_html (list body)))))
 
-
 ;;; HTML-generating functions. HTML being mochiweb-html, in Distel
 ;;; form. i.e. Elisp vector <-> Erlang tuple, and Elisp list <->
 ;;; Erlang list.
