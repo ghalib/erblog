@@ -5,7 +5,6 @@
       (setq para-end (point))
       (eb-trim (buffer-substring-no-properties para-start para-end)))))
 
-
 (defun eb-rpc (mod fun args)
   (erl-spawn
     (erl-send-rpc erl-nodename-cache mod fun args)
