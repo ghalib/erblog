@@ -115,26 +115,11 @@ about_page() ->
 
 
 code_listing() ->
-    html_deflist([
-		  {html_link(<<"http://github.com/ghalib/erblog">>, <<"ErBlog">>),
-		   <<"A blog app I wrote in Erlang (built on the Mochiweb HTTP library) that powers this site. Also has some Emacs Elisp that allows me to author and publish my blog posts from within Emacs (without having to write any raw HTML of course), remotely. I'll write a blog post with more detail soon, but for now you can look at the (very early and somewhat raw) source code.">>},
-		  {html_link(<<"/files/bloom.py">>, <<"bloom.py">>),
-		   [<<"A Bloom filter written in Python. A nice overview on Bloom filters can be found ">>, 
-		   html_link(<<"http://www.internetmathematics.org/volumes/1/4/Broder.pdf">>, <<"here">>),
-		    <<" (warning: PDF).">>]},
-		  
-		  {html_link(<<"http://github.com/ghalib/wsd">>, <<"wsd.py">>),
-		   <<"Word-sense disambiguation using naive Bayes (from the department of 'made-up problems that the real world does not care about').">>},
+    {p, [], [<<"You can look at ">>, 
+	     html_link(<<"http://github.com/ghalib">>, 
+		       <<"my GitHub page ">>), 
+	     <<"for examples of recreational code I have written.">>]}.
 
-		  {html_link(<<"/files/scheme.tar.gz">>, <<"Arithmetic Scheme">>),
-		   [<<"A toy Scheme calculator written in C++. Basically a Scheme interpreter where the only functions are basic arithmetic. A company I once applied to work for asked me for a C++ code sample that was more than 1k lines of code. I didn't have anything on me as I don't normally write C++ at home, so I quickly whipped this up.">>]},
-		  
-		  {html_link(<<"/files/sicp-solutions.tar.gz">>, <<"SICP solutions">>),
-		   [<<"Solutions to the timeless ">>, html_link(<<"http://www.amazon.com/dp/0262011530/">>, <<"SICP">>), <<" (up to half of chapter 4). I haven't touched these in nearly two years; I got to the AMB evaluator section and got distracted with other things. Haven't gone back since, but hopefully will one day.">>]},
-		  
-		  {html_link(<<"/files/.emacs">>, <<".emacs">>),
-		   [<<"My Emacs startup file.">>]}
-		 ]).
 
 code_page() ->
     make_page("Code",
