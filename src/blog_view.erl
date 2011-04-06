@@ -115,7 +115,7 @@ about_page() ->
 
 
 code_listing() ->
-    {p, [], [<<"You can look at ">>, 
+    {p, [], [<<"See ">>, 
 	     html_link(<<"http://github.com/ghalib">>, 
 		       <<"my GitHub page ">>), 
 	     <<"for examples of recreational code I have written.">>]}.
