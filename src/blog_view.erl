@@ -157,7 +157,7 @@ format_all_titles() ->
 
 blog_page() ->
     Blogpost = blog_db:most_recent_blogpost(),
-    make_page(Blogpost#blogpost.title,
+    make_page(<<"Ghalib Suleiman">>,
 	      "blog",
 	      [{a, [{href, '/blog/archives'},
 		    {class, 'navlink archives'}], <<"Archives">>},
