@@ -38,12 +38,6 @@ active_class(Link, ActiveLink) ->
 	    ""
     end.
 
-html_deflist(Items) ->
-    {dl, [], lists:flatten(lists:map(fun({Item, Def}) ->
-					     [{dt, [], [Item]},
-					      {dd, [], Def}] end,
-				     Items))}.    
-
 html_link(Address, Description) ->
     {a, [{href, Address}], Description}.
 
