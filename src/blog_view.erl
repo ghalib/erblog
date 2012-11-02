@@ -31,17 +31,6 @@ google_analytics_embed() ->
       <<"try {var pageTracker = _gat._getTracker(\"UA-8061888-1\");
 pageTracker._trackPageview();} catch(err) {}">>}].
 
-disqus_embed() ->
-    [{'div', [{id, 'disqus_thread'}], []},
-     {script, [{type, 'text/javascript'},
-	       {src, 'http://disqus.com/forums/ghalib/embed.js'}], []},
-     {noscript, [], [{a, [{href, 'http://ghalib.disqus.com/?url=ref'}],
-		      <<"View the discussion thread.">>}]},
-     {a, [{href, 'http://disqus.com'},
-	  {class, 'dsq-brlink'}],
-      [<<"blog comments powered by ">>, {span, [{class, 'logo-disqus'}],
-					 <<"Disqus">>}]}].
-
 active_class(Link, ActiveLink) ->
     if Link =:= ActiveLink ->
 	    "active";
@@ -139,8 +128,7 @@ format_blogpost(Blogpost) ->
 	 [{a, [{href, "/blog/" ++ binary_to_list(Blogpost#blogpost.permalink)}],
 	   [<<"Link to this post">>]}]},
 	{h5, [{class, 'footerdate'}],
-	 [blog_util:pretty_time(binary_to_term(Blogpost#blogpost.timestamp))]}]}]}
-     | disqus_embed()].
+	 [blog_util:pretty_time(binary_to_term(Blogpost#blogpost.timestamp))]}]}]}].
 
 %% For debugging
 format_all_blogposts() ->
