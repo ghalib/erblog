@@ -17,6 +17,7 @@
 -export([start/0,
 	 stop/0,
 	 add_blogpost/2,
+	 add_blogpost/3,
 	 get_blogpost/1,
 	 get_post/1,
 	 most_recent_blogpost/0,
@@ -43,6 +44,9 @@ stop() ->
 
 add_blogpost(Title, Body) ->
     gen_server:call(?MODULE, {add, Title, Body}).
+
+add_blogpost(Title, Body, Permalink) ->
+    gen_server:call(?MODULE, {add, Title, Body, Permalink}).
 
 get_blogpost(Permalink) ->
     gen_server:call(?MODULE, {get, Permalink}).
@@ -82,6 +86,10 @@ init([]) ->
 %%--------------------------------------------------------------------
 handle_call({add, Title, Body}, _From, Posts) ->
     {Reply, Post} = add_post(Title, Body),
+    {reply, Reply, [Post | Posts]};
+
+handle_call({add, Title, Body, Permalink}, _From, Posts) ->
+    {Reply, Post} = add_post(Title, Body, Permalink),
     {reply, Reply, [Post | Posts]};
 
 handle_call({get, Permalink}, _From, Posts) ->
@@ -136,11 +144,12 @@ code_change(_OldVsn, State, _Extra) ->
 %%% Internal functions
 %%--------------------------------------------------------------------
 
-
 add_post(Title, Body) ->
-    blog_view:test_html(Body),
     Permalink = blog_util:gen_unique_permalink(Title),
-
+    add_post(Title, Body, Permalink).
+    
+add_post(Title, Body, Permalink) ->
+    blog_view:test_html(Body),
     Post = #blogpost{timestamp = term_to_binary(calendar:local_time()),
 		     permalink = list_to_binary(Permalink),
 		     title = list_to_binary(Title),
@@ -148,6 +157,9 @@ add_post(Title, Body) ->
 
     Reply = blog_util:database_write(Post),
     {Reply, Post}.
+
+delete_post(Permalink) ->
+    blog_util:database_delete(blogpost, list_to_binary(Permalink)).
 
 get_post(Permalink) ->
     Result = blog_util:database_read(blogpost, list_to_binary(Permalink)),
@@ -157,9 +169,6 @@ get_post(Permalink) ->
 	[Post] ->
 	    Post
     end.
-
-delete_post(Permalink) ->
-    blog_util:database_delete(blogpost, list_to_binary(Permalink)).
 
 get_all_posts() ->
     Posts = blog_util:do_query(qlc:q([Post || Post <- mnesia:table(blogpost)])),

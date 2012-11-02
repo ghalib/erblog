@@ -86,7 +86,7 @@ about_text() ->
 
 copyright() ->
     {'div', [{id, 'copyright'}],
-     <<"© Ghalib Suleiman 2010">>}.
+     <<"© Ghalib Suleiman 2012">>}.
 
 make_page(Title, ActiveLink, Content) ->
     html_text({html, [{xmlns, <<"http://www.w3.org/1999/xhtml">>},
@@ -156,7 +156,6 @@ format_all_titles() ->
     html_list(TitleLinks, 'archivelist').
 
 blog_page() ->
-    Blogpost = blog_db:most_recent_blogpost(),
     make_page(<<"Ghalib Suleiman">>,
 	      "blog",
 	      [{a, [{href, '/blog/archives'},

@@ -15,17 +15,23 @@
 	  (message "RPC failed: %S"
 		   reason))))))
 
-(defun eb-delete-post (permalink)
-  (interactive "MEnter permalink to delete: ")
-  "Deletes post from server, given said post's permalink"
-  (eb-rpc 'blog_db 'delete_blogpost (list permalink)))
-
-(defun eb-publish-post ()
+(defun eb-publish-post (&optional permalink)
   (interactive)
   (let ((blogpost (assemble-post)))
     (let ((title (car blogpost))
 	  (body (cdr blogpost)))
-      (eb-rpc 'blog_db 'add_blogpost (list title body)))))
+      (if permalink
+	  (eb-rpc 'blog_db 'add_blogpost (list title body permalink))
+	(eb-rpc 'blog_db 'add_blogpost (list title body))))))
+
+(defun eb-delete-post (permalink)
+  "Deletes post from server, given said post's permalink."
+  (interactive "MEnter permalink to delete: ")
+  (eb-rpc 'blog_db 'delete_blogpost (list permalink)))
+
+(defun eb-most-recent-post ()
+  (interactive)
+  (eb-rpc 'blog_db 'most_recent_blogpost '()))
 
 (defun eb-test-html ()
   "Useful for checking if the Elisp parses into HTML correctly.
