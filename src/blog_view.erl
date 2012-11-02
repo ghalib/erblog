@@ -67,11 +67,15 @@ about_text() ->
     have a website, so I thought I would hop on the bandwagon
     too.">>},
 
-     {p, [], [<<"If you are doing any interesting work, I would love to hear from you. I can be reached at ">>, 
-	      html_link('mailto:ghalib@sent.com', <<"ghalib@sent.com">>),
-	      <<".">>]},
-    
+     {p, [], [<<"I can be reached using any of these fine services:">>,
+	      contacts_list()]},    
      copyright()].
+
+contacts_list() ->
+    html_list([html_link(<<"mailto:ghalib@sent.com">>, <<"Email">>),
+	       html_link(<<"http://twitter.com/ghalib">>, <<"Twitter">>),
+	       html_link(<<"http://github.com">>, <<"GitHub">>)],
+	     'list').
 
 copyright() ->
     {'div', [{id, 'copyright'}],
@@ -141,7 +145,7 @@ format_all_titles() ->
 				   html_link(Blogpost#blogpost.permalink,
 					     Blogpost#blogpost.title) end,
 			   Blogposts),
-    html_list(TitleLinks, 'archivelist').
+    html_list(TitleLinks, 'list').
 
 blog_page() ->
     make_page(<<"Ghalib Suleiman">>,
