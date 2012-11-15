@@ -6,9 +6,10 @@
 -module(blog_web).
 -author('ghalib@sent.com').
 
--export([start/1, stop/0, loop/2]).
+-include("blogpost.hrl").
 
 %% External API
+-export([start/1, stop/0, loop/2]).
 
 start(Options) ->
     {DocRoot, Options1} = get_option(docroot, Options),
@@ -30,7 +31,7 @@ loop(Req, DocRoot) ->
 		"code" ->
 		    html_reply(Req, blog_view:code_page());
 		"blog" ->
-		    html_reply(Req, blog_view:blog_page());
+		    redirect_to_latest(Req);
 		"blog/archives" ->
 		    html_reply(Req, blog_view:archives_page());
 		"blog/rss" ->
@@ -38,7 +39,7 @@ loop(Req, DocRoot) ->
 		[$b, $l, $o, $g, $/ | Permalink] ->
 		    html_reply(Req, blog_view:blog_page(Permalink));
 		"" ->
-		    blog_util:redirect(Req, "/blog");
+		    redirect_to_latest(Req);
                 _ ->
                     Req:serve_file(Path, DocRoot)
             end;
@@ -55,6 +56,10 @@ loop(Req, DocRoot) ->
 
 get_option(Option, Options) ->
     {proplists:get_value(Option, Options), proplists:delete(Option, Options)}.
+
+redirect_to_latest(Req) ->
+    Latest = blog_db:most_recent_blogpost(),
+    blog_util:redirect(Req, "blog/" ++ binary_to_list(Latest#blogpost.permalink)).
 
 html_reply(Req, Reply) ->
     Req:ok({"text/html", Reply}).
