@@ -65,7 +65,7 @@ about_text() ->
 contacts_list() ->
     html_list([html_link(<<"mailto:ghalib@sent.com">>, <<"Email">>),
 	       html_link(<<"http://twitter.com/ghalib">>, <<"Twitter">>),
-	       html_link(<<"http://github.com">>, <<"GitHub">>),
+	       html_link(<<"http://github.com/ghalib">>, <<"GitHub">>),
                html_link(<<"http://www.linkedin.com/in/ghalibs">>, <<"LinkedIn">>)],
 	     'list').
 
