@@ -56,24 +56,22 @@ make_navbar(ActiveLink) ->
 
 about_text() -> 
     [{p, [], <<"Hello, my name is Ghalib Suleiman (or
-    Sulaiman). I graduated from university in December 2006, and
-    currently live in Cambridge, Massachusetts, USA. Everyone else seems to
-    have a website, so I thought I would hop on the bandwagon
-    too.">>},
+    Sulaiman). I currently work in natural language processing.">>},
 
      {p, [], [<<"I can be reached using any of these fine services:">>,
-	      contacts_list()]},    
+	      contacts_list()]},
      copyright()].
 
 contacts_list() ->
     html_list([html_link(<<"mailto:ghalib@sent.com">>, <<"Email">>),
 	       html_link(<<"http://twitter.com/ghalib">>, <<"Twitter">>),
-	       html_link(<<"http://github.com">>, <<"GitHub">>)],
+	       html_link(<<"http://github.com">>, <<"GitHub">>),
+               html_link(<<"http://www.linkedin.com/in/ghalibs">>, <<"LinkedIn">>)],
 	     'list').
 
 copyright() ->
     {'div', [{id, 'copyright'}],
-     <<"© Ghalib Suleiman 2012">>}.
+     <<"© Ghalib Suleiman 2013">>}.
 
 make_page(Title, ActiveLink, Content) ->
     html_text({html, [{xmlns, <<"http://www.w3.org/1999/xhtml">>},
