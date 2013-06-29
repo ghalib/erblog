@@ -58,6 +58,10 @@ the post in raw HTML text.  Otherwise returns error."
 (defun defpara (&rest body)
   `[p nil ,body])
 
+(defun ul (&rest items)
+  `[ul nil ,(mapcar (lambda (item)
+                      `[li nil ,item]) items)])
+
 (defun defcode (code)
   "All code is in a PRE tag with class CODE."
   `[pre ([class code]) ,code])
