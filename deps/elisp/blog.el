@@ -59,8 +59,13 @@ the post in raw HTML text.  Otherwise returns error."
   `[p nil ,body])
 
 (defun ul (&rest items)
-  `[ul nil ,(mapcar (lambda (item)
-                      `[li nil ,item]) items)])
+  `[ul nil ,items])
+
+(defun li (&rest body)
+  `[li nil ,body])
+
+(defun header (type &rest body)
+  `[,type nil ,body])
 
 (defun defcode (code)
   "All code is in a PRE tag with class CODE."

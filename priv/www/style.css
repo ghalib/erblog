@@ -65,6 +65,11 @@ h3.blogtitle {
     clear: left;
 }
 
+h4 {
+    font-size: 105%;
+    font-weight: normal;
+}
+
 #navbar {
     font-size: 120%;
     height: 16px;
