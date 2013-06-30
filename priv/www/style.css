@@ -59,7 +59,7 @@ p {
 
 h3.blogtitle {
     color: silver;
-    letter-spacing: 0.05em;
+    letter-spacing: 1px;
     font-weight: normal;
     font-size: 137%;
     clear: left;
