@@ -51,7 +51,10 @@ the post in raw HTML text.  Otherwise returns error."
   cock up."
   title)
 
-(defun deflink (dest &optional body)
+(defun defclas (class &rest body)
+  `[div ([class ,class]) ,body])
+
+(defun deflink (dest &rest body)
   "Generate link tag"
   `[a ([href ,dest]) ,body])
 
