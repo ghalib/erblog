@@ -77,8 +77,8 @@ the post in raw HTML text.  Otherwise returns error."
 (defun defimg (imgsrc &optional class)
   `[img ([src ,imgsrc] [class ,class]) ()])
 
-(defun center (elem)
-  `[center () (,elem)])
+(defun center (&rest body)
+  `[center () ,body])
 
 (defun defeq (imgsrc)
   (defpara (center (defimg imgsrc 'equation))))
