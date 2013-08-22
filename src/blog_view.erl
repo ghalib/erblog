@@ -56,7 +56,9 @@ make_navbar(ActiveLink) ->
 
 about_text() -> 
     [{p, [], <<"Hello, my name is Ghalib Suleiman (or
-    Sulaiman). I currently work in natural language processing.">>},
+Sulaiman). I worked in natural language processing until August 2013,
+when I decided to quit my job to move to San Francisco and explore new
+opportunities.">>},
 
      {p, [], [<<"I can be reached using any of these fine services:">>,
 	      contacts_list()]},
